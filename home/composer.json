@@ -1,0 +1,5 @@
+{
+    "require": {
+        "sllh/composer-versions-check": "^2.0"
+    }
+}
