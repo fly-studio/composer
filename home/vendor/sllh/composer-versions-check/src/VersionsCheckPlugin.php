@@ -57,6 +57,20 @@ final class VersionsCheckPlugin implements PluginInterface, EventSubscriberInter
     /**
      * {@inheritdoc}
      */
+    public function deactivate(Composer $composer, IOInterface $io)
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function uninstall(Composer $composer, IOInterface $io)
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public static function getSubscribedEvents()
     {
         return array(
@@ -69,18 +83,12 @@ final class VersionsCheckPlugin implements PluginInterface, EventSubscriberInter
         );
     }
 
-    /**
-     * @param CommandEvent $event
-     */
     public function command(CommandEvent $event)
     {
         $input = $event->getInput();
         $this->preferLowest = $input->hasOption('prefer-lowest') && true === $input->getOption('prefer-lowest');
     }
 
-    /**
-     * @param Event $event
-     */
     public function postUpdate(Event $event)
     {
         if (true === $this->preferLowest) {
@@ -115,10 +123,6 @@ final class VersionsCheckPlugin implements PluginInterface, EventSubscriberInter
         return $options;
     }
 
-    /**
-     * @param RepositoryManager    $repositoryManager
-     * @param RootPackageInterface $rootPackage
-     */
     private function checkVersions(RepositoryManager $repositoryManager, RootPackageInterface $rootPackage)
     {
         foreach ($repositoryManager->getRepositories() as $repository) {

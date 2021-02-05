@@ -8,25 +8,30 @@
     "packages": [
         {
             "name": "sllh/composer-versions-check",
-            "version": "v2.0.3",
+            "version": "v2.0.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Soullivaneuh/composer-versions-check.git",
-                "reference": "f6fe100dd71a9fa0d3c922612b445fb179e19127"
+                "url": "https://github.com/soullivaneuh/composer-versions-check.git",
+                "reference": "05bca35588b6f234390fd4946d84c8f8e1890c43"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Soullivaneuh/composer-versions-check/zipball/f6fe100dd71a9fa0d3c922612b445fb179e19127",
-                "reference": "f6fe100dd71a9fa0d3c922612b445fb179e19127",
-                "shasum": ""
+                "url": "https://api.github.com/repos/soullivaneuh/composer-versions-check/zipball/05bca35588b6f234390fd4946d84c8f8e1890c43",
+                "reference": "05bca35588b6f234390fd4946d84c8f8e1890c43",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
             },
             "require": {
-                "composer-plugin-api": "^1.0",
+                "composer-plugin-api": "^1.0 || ^2.0",
                 "php": "^5.3 || ^7.0"
             },
             "require-dev": {
-                "composer/composer": "^1.0",
-                "sllh/php-cs-fixer-styleci-bridge": "^2.0",
+                "composer/composer": "^1.0 || ^2.0",
                 "symfony/phpunit-bridge": "^2.7.4|^3.0"
             },
             "type": "composer-plugin",
@@ -58,7 +63,11 @@
                 "update",
                 "versions"
             ],
-            "time": "2017-06-16T09:29:23+00:00"
+            "support": {
+                "issues": "https://github.com/soullivaneuh/composer-versions-check/issues",
+                "source": "https://github.com/soullivaneuh/composer-versions-check/tree/master"
+            },
+            "time": "2020-05-05T13:03:07+00:00"
         }
     ],
     "packages-dev": [],
@@ -68,5 +77,6 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
 }

@@ -14,9 +14,11 @@ use Composer\Plugin\PluginEvents;
 use Composer\Plugin\PluginInterface;
 use Composer\Plugin\PluginManager;
 use Composer\Repository\ArrayRepository;
+use Composer\Repository\InstalledArrayRepository;
 use Composer\Repository\RepositoryManager;
 use Composer\Repository\WritableArrayRepository;
 use Composer\Script\ScriptEvents;
+use Composer\Util\HttpDownloader;
 use SLLH\ComposerVersionsCheck\VersionsCheckPlugin;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
@@ -58,15 +60,18 @@ class VersionsCheckPluginTest extends \PHPUnit_Framework_TestCase
             ->willReturn(new PluginManager($this->io, $this->composer));
         $this->composer->expects($this->any())->method('getEventDispatcher')
             ->willReturn(new EventDispatcher($this->composer, $this->io));
+        $repositoryManager = version_compare(PluginInterface::PLUGIN_API_VERSION, '2.0.0') >= 0
+            ? new RepositoryManager($this->io, $this->config, new HttpDownloader($this->io, $this->config))
+            : new RepositoryManager($this->io, $this->config)
+        ;
         $this->composer->expects($this->any())->method('getRepositoryManager')
-            ->willReturn(new RepositoryManager($this->io, new Config()));
+            ->willReturn($repositoryManager);
     }
 
     /**
      * @dataProvider getTestOptionsData
      *
      * @param array|null $configData
-     * @param array      $expectedOptions
      */
     public function testOptions($configData, array $expectedOptions)
     {
@@ -170,7 +175,7 @@ class VersionsCheckPluginTest extends \PHPUnit_Framework_TestCase
     {
         $this->addComposerPlugin(new VersionsCheckPlugin());
 
-        $localRepository = new WritableArrayRepository();
+        $localRepository = $this->makeWritableRepository();
         $localRepository->addPackage(new Package('foo/bar', '1.0.0', '1.0.0'));
         $this->composer->getRepositoryManager()->setLocalRepository($localRepository);
 
@@ -196,7 +201,7 @@ EOF
     {
         $this->addComposerPlugin(new VersionsCheckPlugin());
 
-        $localRepository = new WritableArrayRepository();
+        $localRepository = $this->makeWritableRepository();
         $localRepository->addPackage(new Package('foo/bar', '1.0.0', '1.0.0'));
         $this->composer->getRepositoryManager()->setLocalRepository($localRepository);
 
@@ -219,7 +224,7 @@ EOF
     {
         $this->addComposerPlugin(new VersionsCheckPlugin());
 
-        $localRepository = new WritableArrayRepository();
+        $localRepository = $this->makeWritableRepository();
         $localRepository->addPackage(new Package('foo/bar', '1.0.0', '1.0.0'));
         $this->composer->getRepositoryManager()->setLocalRepository($localRepository);
 
@@ -252,12 +257,14 @@ EOF
 
     private function assertSameOutput($expectedOutput, $message = '')
     {
-        if ('@package_version@' === Composer::VERSION) {
-            $expectedOutput = '<warning>You are running an unstable version of composer.'
-                ." The sllh/composer-versions-check plugin might not works as expected.</warning>\n"
-                .$expectedOutput;
-        }
-
         $this->assertSame($expectedOutput, $this->io->getOutput(), $message);
+    }
+
+    private function makeWritableRepository()
+    {
+        return version_compare(PluginInterface::PLUGIN_API_VERSION, '2.0.0') >= 0
+            ? new InstalledArrayRepository()
+            : new WritableArrayRepository()
+        ;
     }
 }
