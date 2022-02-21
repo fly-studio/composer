@@ -1,5 +1,10 @@
 {
     "require": {
         "sllh/composer-versions-check": "^2.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "sllh/composer-versions-check": true
+        }
     }
 }

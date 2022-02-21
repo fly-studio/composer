@@ -7,4 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'SLLH\\ComposerVersionsCheck\\OutdatedPackage' => $vendorDir . '/sllh/composer-versions-check/src/OutdatedPackage.php',
+    'SLLH\\ComposerVersionsCheck\\VersionsCheck' => $vendorDir . '/sllh/composer-versions-check/src/VersionsCheck.php',
+    'SLLH\\ComposerVersionsCheck\\VersionsCheckPlugin' => $vendorDir . '/sllh/composer-versions-check/src/VersionsCheckPlugin.php',
 );

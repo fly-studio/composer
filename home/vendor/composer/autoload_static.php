@@ -22,6 +22,9 @@ class ComposerStaticInit49f36237465b8b334836952af8dd62bd
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'SLLH\\ComposerVersionsCheck\\OutdatedPackage' => __DIR__ . '/..' . '/sllh/composer-versions-check/src/OutdatedPackage.php',
+        'SLLH\\ComposerVersionsCheck\\VersionsCheck' => __DIR__ . '/..' . '/sllh/composer-versions-check/src/VersionsCheck.php',
+        'SLLH\\ComposerVersionsCheck\\VersionsCheckPlugin' => __DIR__ . '/..' . '/sllh/composer-versions-check/src/VersionsCheckPlugin.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
